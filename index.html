@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Weekly Workout Calendar</title>
+<style>
+  :root {
+    --bg: #EDE4DB;
+    --card-bg: #FAF7F2;
+    --card-border: #DCD0BE;
+    --text-main: #3A2E22;
+    --text-sub: #8F8371;
+    --accent: #D6A396;
+    --accent-dim: #F3E1D9;
+    --rest: #A6BBBD;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+    padding: 20px 16px 60px;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  header h1 {
+    font-size: 1.4rem;
+    margin: 0 0 4px;
+  }
+  header p {
+    color: var(--text-sub);
+    font-size: 0.85rem;
+    margin: 0;
+  }
+  .progress-bar-wrap {
+    max-width: 480px;
+    margin: 16px auto 24px;
+  }
+  .progress-track {
+    background: var(--card-border);
+    border-radius: 999px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    background: var(--accent);
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+  .progress-label {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-sub);
+    margin-top: 6px;
+  }
+  .calendar {
+    max-width: 480px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .day-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .day-card.completed {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+  .day-card.rest .day-workout {
+    color: var(--rest);
+  }
+  .day-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+  .day-name {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-sub);
+  }
+  .day-workout {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .day-notes {
+    font-size: 0.8rem;
+    color: var(--text-sub);
+    line-height: 1.35;
+  }
+  .checkbox-wrapper {
+    flex-shrink: 0;
+  }
+  .checkbox-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--card-border);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .checkbox-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: var(--card-border);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke 0.2s ease;
+  }
+  .day-card.completed .checkbox-btn {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .day-card.completed .checkbox-btn svg {
+    stroke: #FAF7F2;
+  }
+  footer {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 0.75rem;
+    color: var(--text-sub);
+  }
+  .reset-btn {
+    display: block;
+    margin: 24px auto 0;
+    background: transparent;
+    border: 1px solid var(--card-border);
+    color: var(--text-sub);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Weekly Workout Calendar</h1>
+  <p id="week-range"></p>
+</header>
+
+<div class="progress-bar-wrap">
+  <div class="progress-track">
+    <div class="progress-fill" id="progress-fill"></div>
+  </div>
+  <div class="progress-label" id="progress-label">0 of 7 days complete</div>
+</div>
+
+<div class="calendar" id="calendar">
+
+  <!-- Monday -->
+  <div class="day-card" data-day="monday">
+    <div class="day-info">
+      <span class="day-name">Monday</span>
+      <span class="day-workout">Full-Body Strength 🏋️</span>
+      <span class="day-notes">Focus: Compound lifts (squat, hinge, push, pull). 3-4 sets of 6-10 reps.</span>
+    </div>
+    <div class="checkbox-wrapper">
+      <button class="checkbox-btn" onclick="toggleDay('monday')">
+        <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Tuesday -->
+  <div class="day-card" data-day="tuesday">
+    <div class="day-info">
+      <span class="day-name">Tuesday</span>
+      <span class="day-workout">Mobility &amp; Core 🧘</span>
+      <span class="day-notes">Focus: Active recovery. Hip/shoulder mobility flow + 15 min core circuit.</span>
+    </div>
+    <div class="checkbox-wrapper">
+      <button class="checkbox-btn" onclick="toggleDay('tuesday')">
+        <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Wednesday -->
+  <div class="day-card" data-day="wednesday">
+    <div class="day-info">
+      <span class="day-name">Wednesday</span>
+      <span class="day-workout">30-Min Steady-State Aerobic Run 🏃‍♀️</span>
+      <span class="day-notes">Focus: Conversational endurance pace. Smooth, continuous cardio to swap for cycling.</span>
+    </div>
+    <div class="checkbox-wrapper">
+      <button class="checkbox-btn" onclick="toggleDay('wednesday')">
+        <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Thursday -->
+  <div class="day-card" data-day="thursday">
+    <div class="day-info">
+      <span class="day-name">Thursday</span>
+      <span class="day-workout">Upper Body Strength 💪</span>
+      <span class="day-notes">Focus: Push/pull split. 3-4 sets of 8-12 reps, moderate load.</span>
+    </div>
+    <div class="checkbox-wrapper">
+      <button class="checkbox-btn" onclick="toggleDay('thursday')">
+        <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Friday -->
+  <div class="day-card" data-day="friday">
+    <div class="day-info">
+      <span class="day-name">Friday</span>
+      <span class="day-workout">Interval Run / Cycle 🚴</span>
+      <span class="day-notes">Focus: 6-8 x 2 min hard efforts with 90 sec easy recovery between.</span>
+    </div>
+    <div class="checkbox-wrapper">
+      <button class="checkbox-btn" onclick="toggleDay('friday')">
+        <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Saturday -->
+  <div class="day-card" data-day="saturday">
+    <div class="day-info">
+      <span class="day-name">Saturday</span>
+      <span class="day-workout">Lower Body Strength 🦵</span>
+      <span class="day-notes">Focus: Legs and glutes. 3-4 sets of 8-12 reps, moderate-heavy load.</span>
+    </div>
+    <div class="checkbox-wrapper">
+      <button class="checkbox-btn" onclick="toggleDay('saturday')">
+        <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Sunday -->
+  <div class="day-card rest" data-day="sunday">
+    <div class="day-info">
+      <span class="day-name">Sunday</span>
+      <span class="day-workout">Rest Day 😴</span>
+      <span class="day-notes">Focus: Full recovery. Light walk or stretching optional.</span>
+    </div>
+    <div class="checkbox-wrapper">
+      <button class="checkbox-btn" onclick="toggleDay('sunday')">
+        <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<button class="reset-btn" onclick="resetWeek()">Reset this week</button>
+
+<footer>Tap the circle to check off a day. Progress is saved on this device and resets automatically each Monday.</footer>
+
+<script>
+  // Determine the current week's Monday (ISO week) to key storage per-week
+  function getMondayKey(d) {
+    const date = new Date(d);
+    const day = date.getDay(); // 0 = Sunday
+    const diff = (day === 0 ? -6 : 1 - day);
+    date.setDate(date.getDate() + diff);
+    date.setHours(0,0,0,0);
+    return date.toISOString().slice(0,10);
+  }
+
+  const STORAGE_PREFIX = 'workout-week-';
+  const weekKey = getMondayKey(new Date());
+  const storageKey = STORAGE_PREFIX + weekKey;
+
+  function loadState() {
+    try {
+      return JSON.parse(localStorage.getItem(storageKey)) || {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function saveState(state) {
+    localStorage.setItem(storageKey, JSON.stringify(state));
+  }
+
+  function renderState() {
+    const state = loadState();
+    const cards = document.querySelectorAll('.day-card');
+    let completedCount = 0;
+    cards.forEach(card => {
+      const day = card.dataset.day;
+      if (state[day]) {
+        card.classList.add('completed');
+        completedCount++;
+      } else {
+        card.classList.remove('completed');
+      }
+    });
+    const total = cards.length;
+    const pct = Math.round((completedCount / total) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-label').textContent = completedCount + ' of ' + total + ' days complete';
+  }
+
+  function toggleDay(day) {
+    const state = loadState();
+    state[day] = !state[day];
+    saveState(state);
+    renderState();
+  }
+
+  function resetWeek() {
+    if (confirm('Reset all checkmarks for this week?')) {
+      localStorage.removeItem(storageKey);
+      renderState();
+    }
+  }
+
+  function setWeekRange() {
+    const monday = new Date(weekKey);
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    const opts = { month: 'short', day: 'numeric' };
+    const label = monday.toLocaleDateString('en-US', opts) + ' – ' + sunday.toLocaleDateString('en-US', opts);
+    document.getElementById('week-range').textContent = label;
+  }
+
+  setWeekRange();
+  renderState();
+</script>
+
+</body>
+</html>
