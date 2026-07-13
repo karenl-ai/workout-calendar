@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Weekly Workout Calendar</title>
+<title>Workout Calendar</title>
 <style>
   :root {
     --bg: #EDE4DB;
@@ -36,9 +36,24 @@
     font-size: 0.85rem;
     margin: 0;
   }
+  .week-title {
+    max-width: 480px;
+    margin: 32px auto 4px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--text-main);
+  }
+  .week-subtitle {
+    max-width: 480px;
+    margin: 0 auto 16px;
+    font-size: 0.8rem;
+    text-align: center;
+    color: var(--text-sub);
+  }
   .progress-bar-wrap {
     max-width: 480px;
-    margin: 16px auto 24px;
+    margin: 16px auto 20px;
   }
   .progress-track {
     background: var(--card-border);
@@ -80,8 +95,13 @@
     border-color: var(--accent);
     background: var(--accent-dim);
   }
-  .day-card.rest .day-workout {
+  .day-card.rest .day-workout,
+  .day-card.trip .day-workout {
     color: var(--rest);
+  }
+  .day-card.trip {
+    border-style: dashed;
+    opacity: 0.9;
   }
   .day-info {
     display: flex;
@@ -94,6 +114,18 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--text-sub);
+    display: flex;
+    align-items: center;
+  }
+  .today-badge {
+    background: var(--accent);
+    color: var(--card-bg);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 8px;
   }
   .day-workout {
     font-size: 1rem;
@@ -137,15 +169,9 @@
   .day-card.completed .checkbox-btn svg {
     stroke: #FAF7F2;
   }
-  footer {
-    text-align: center;
-    margin-top: 24px;
-    font-size: 0.75rem;
-    color: var(--text-sub);
-  }
   .reset-btn {
     display: block;
-    margin: 24px auto 0;
+    margin: 16px auto 0;
     background: transparent;
     border: 1px solid var(--card-border);
     color: var(--text-sub);
@@ -154,198 +180,406 @@
     font-size: 0.8rem;
     cursor: pointer;
   }
+  .roadmap-intro {
+    max-width: 480px;
+    margin: 0 auto 16px;
+    font-size: 0.85rem;
+    color: var(--text-sub);
+    text-align: center;
+    line-height: 1.45;
+  }
+  .phase-list {
+    max-width: 480px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .phase-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .phase-card.wedding-card {
+    border-left-color: var(--rest);
+    background: var(--accent-dim);
+  }
+  .phase-dates {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-sub);
+  }
+  .phase-title {
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .phase-notes {
+    font-size: 0.82rem;
+    color: var(--text-sub);
+    line-height: 1.4;
+  }
+  footer {
+    text-align: center;
+    margin-top: 32px;
+    font-size: 0.75rem;
+    color: var(--text-sub);
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Weekly Workout Calendar</h1>
-  <p id="week-range"></p>
+  <h1>Workout Calendar</h1>
+  <p id="wedding-countdown"></p>
 </header>
 
-<div class="progress-bar-wrap">
-  <div class="progress-track">
-    <div class="progress-fill" id="progress-fill"></div>
-  </div>
-  <div class="progress-label" id="progress-label">0 of 7 days complete</div>
-</div>
+<main>
 
-<div class="calendar" id="calendar">
+  <!-- WEEK 1: July 13-19 -->
+  <section class="week-section">
+    <h2 class="week-title">This Week — Jul 13–19</h2>
+    <div class="progress-bar-wrap">
+      <div class="progress-track"><div class="progress-fill"></div></div>
+      <div class="progress-label">0 of 7 days complete</div>
+    </div>
+    <div class="calendar">
 
-  <!-- Monday -->
-  <div class="day-card" data-day="monday">
-    <div class="day-info">
-      <span class="day-name">Monday</span>
-      <span class="day-workout">Full-Body Strength 🏋️</span>
-      <span class="day-notes">Focus: Compound lifts (squat, hinge, push, pull). 3-4 sets of 6-10 reps.</span>
-    </div>
-    <div class="checkbox-wrapper">
-      <button class="checkbox-btn" onclick="toggleDay('monday')">
-        <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
-      </button>
-    </div>
-  </div>
+      <div class="day-card" data-date="2026-07-13">
+        <div class="day-info">
+          <span class="day-name">Monday, Jul 13</span>
+          <span class="day-workout">Core/Abs Video + Interval Run 🔥🏃‍♀️</span>
+          <span class="day-notes">Makeup session: Sunday's missed core/abs video combined with today's VO2 max interval run.</span>
+        </div>
+        <div class="checkbox-wrapper">
+          <button class="checkbox-btn" onclick="toggleDay('2026-07-13')">
+            <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
+          </button>
+        </div>
+      </div>
 
-  <!-- Tuesday -->
-  <div class="day-card" data-day="tuesday">
-    <div class="day-info">
-      <span class="day-name">Tuesday</span>
-      <span class="day-workout">Mobility &amp; Core 🧘</span>
-      <span class="day-notes">Focus: Active recovery. Hip/shoulder mobility flow + 15 min core circuit.</span>
-    </div>
-    <div class="checkbox-wrapper">
-      <button class="checkbox-btn" onclick="toggleDay('tuesday')">
-        <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
-      </button>
-    </div>
-  </div>
+      <div class="day-card" data-date="2026-07-14">
+        <div class="day-info">
+          <span class="day-name">Tuesday, Jul 14</span>
+          <span class="day-workout">Upper Body Tone 💪</span>
+          <span class="day-notes">Dumbbells/bands, 3 rounds: shoulder press, bent-over rows, tricep kickbacks, bicep curls, lateral raises. 12-15 reps.</span>
+        </div>
+        <div class="checkbox-wrapper">
+          <button class="checkbox-btn" onclick="toggleDay('2026-07-14')">
+            <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
+          </button>
+        </div>
+      </div>
 
-  <!-- Wednesday -->
-  <div class="day-card" data-day="wednesday">
-    <div class="day-info">
-      <span class="day-name">Wednesday</span>
-      <span class="day-workout">30-Min Steady-State Aerobic Run 🏃‍♀️</span>
-      <span class="day-notes">Focus: Conversational endurance pace. Smooth, continuous cardio to swap for cycling.</span>
-    </div>
-    <div class="checkbox-wrapper">
-      <button class="checkbox-btn" onclick="toggleDay('wednesday')">
-        <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
-      </button>
-    </div>
-  </div>
+      <div class="day-card" data-date="2026-07-15">
+        <div class="day-info">
+          <span class="day-name">Wednesday, Jul 15</span>
+          <span class="day-workout">Zone 2 Steady Cardio 🚶‍♀️</span>
+          <span class="day-notes">30-40 min brisk walk, jog, or bike at conversational pace. Subbing for this week's skipped cycling class.</span>
+        </div>
+        <div class="checkbox-wrapper">
+          <button class="checkbox-btn" onclick="toggleDay('2026-07-15')">
+            <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
+          </button>
+        </div>
+      </div>
 
-  <!-- Thursday -->
-  <div class="day-card" data-day="thursday">
-    <div class="day-info">
-      <span class="day-name">Thursday</span>
-      <span class="day-workout">Upper Body Strength 💪</span>
-      <span class="day-notes">Focus: Push/pull split. 3-4 sets of 8-12 reps, moderate load.</span>
-    </div>
-    <div class="checkbox-wrapper">
-      <button class="checkbox-btn" onclick="toggleDay('thursday')">
-        <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
-      </button>
-    </div>
-  </div>
+      <div class="day-card" data-date="2026-07-16">
+        <div class="day-info">
+          <span class="day-name">Thursday, Jul 16</span>
+          <span class="day-workout">Lower Body Tone 🦵</span>
+          <span class="day-notes">Goblet squats, walking lunges, single-leg RDLs, band lateral walks, glute bridges. 3-4 sets of 12-15.</span>
+        </div>
+        <div class="checkbox-wrapper">
+          <button class="checkbox-btn" onclick="toggleDay('2026-07-16')">
+            <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
+          </button>
+        </div>
+      </div>
 
-  <!-- Friday -->
-  <div class="day-card" data-day="friday">
-    <div class="day-info">
-      <span class="day-name">Friday</span>
-      <span class="day-workout">Interval Run / Cycle 🚴</span>
-      <span class="day-notes">Focus: 6-8 x 2 min hard efforts with 90 sec easy recovery between.</span>
-    </div>
-    <div class="checkbox-wrapper">
-      <button class="checkbox-btn" onclick="toggleDay('friday')">
-        <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
-      </button>
-    </div>
-  </div>
+      <div class="day-card" data-date="2026-07-17">
+        <div class="day-info">
+          <span class="day-name">Friday, Jul 17</span>
+          <span class="day-workout">Interval Session #2 🔥</span>
+          <span class="day-notes">Bike, rower, or incline treadmill: 6-8 rounds of 2 min hard / 90 sec easy. Different modality than Monday's run.</span>
+        </div>
+        <div class="checkbox-wrapper">
+          <button class="checkbox-btn" onclick="toggleDay('2026-07-17')">
+            <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
+          </button>
+        </div>
+      </div>
 
-  <!-- Saturday -->
-  <div class="day-card" data-day="saturday">
-    <div class="day-info">
-      <span class="day-name">Saturday</span>
-      <span class="day-workout">Lower Body Strength 🦵</span>
-      <span class="day-notes">Focus: Legs and glutes. 3-4 sets of 8-12 reps, moderate-heavy load.</span>
-    </div>
-    <div class="checkbox-wrapper">
-      <button class="checkbox-btn" onclick="toggleDay('saturday')">
-        <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
-      </button>
-    </div>
-  </div>
+      <div class="day-card" data-date="2026-07-18">
+        <div class="day-info">
+          <span class="day-name">Saturday, Jul 18</span>
+          <span class="day-workout">Full-Body Tone + Core 💥</span>
+          <span class="day-notes">Circuit: push-ups, dumbbell step-ups, plank variations, side planks, deadbugs.</span>
+        </div>
+        <div class="checkbox-wrapper">
+          <button class="checkbox-btn" onclick="toggleDay('2026-07-18')">
+            <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
+          </button>
+        </div>
+      </div>
 
-  <!-- Sunday -->
-  <div class="day-card rest" data-day="sunday">
-    <div class="day-info">
-      <span class="day-name">Sunday</span>
-      <span class="day-workout">Rest Day 😴</span>
-      <span class="day-notes">Focus: Full recovery. Light walk or stretching optional.</span>
+      <div class="day-card rest" data-date="2026-07-19">
+        <div class="day-info">
+          <span class="day-name">Sunday, Jul 19</span>
+          <span class="day-workout">Active Recovery 🧘</span>
+          <span class="day-notes">Easy walk, stretching, or foam rolling only.</span>
+        </div>
+        <div class="checkbox-wrapper">
+          <button class="checkbox-btn" onclick="toggleDay('2026-07-19')">
+            <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
+          </button>
+        </div>
+      </div>
+
     </div>
-    <div class="checkbox-wrapper">
-      <button class="checkbox-btn" onclick="toggleDay('sunday')">
-        <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
-      </button>
+    <button class="reset-btn" onclick="resetWeek('2026-07-13','2026-07-19')">Reset this week</button>
+  </section>
+
+  <!-- WEEK 2: July 20-26, taper into bach trip -->
+  <section class="week-section">
+    <h2 class="week-title">Bach Trip Prep — Jul 20–26</h2>
+    <p class="week-subtitle">Lighter volume this week to taper into the trip — leaving Friday, Jul 24.</p>
+    <div class="progress-bar-wrap">
+      <div class="progress-track"><div class="progress-fill"></div></div>
+      <div class="progress-label">0 of 5 days complete</div>
     </div>
-  </div>
+    <div class="calendar">
 
-</div>
+      <div class="day-card" data-date="2026-07-20">
+        <div class="day-info">
+          <span class="day-name">Monday, Jul 20</span>
+          <span class="day-workout">Upper Body Tone (lighter) 💪</span>
+          <span class="day-notes">Same circuit as last Tuesday, 2-3 rounds instead of 3 — keep the stimulus, ease the volume.</span>
+        </div>
+        <div class="checkbox-wrapper">
+          <button class="checkbox-btn" onclick="toggleDay('2026-07-20')">
+            <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
+          </button>
+        </div>
+      </div>
 
-<button class="reset-btn" onclick="resetWeek()">Reset this week</button>
+      <div class="day-card" data-date="2026-07-21">
+        <div class="day-info">
+          <span class="day-name">Tuesday, Jul 21</span>
+          <span class="day-workout">Interval Run (moderate) 🏃‍♀️</span>
+          <span class="day-notes">5 rounds of 2 min hard / 2 min easy. Shorter than usual — keep legs fresh for the trip.</span>
+        </div>
+        <div class="checkbox-wrapper">
+          <button class="checkbox-btn" onclick="toggleDay('2026-07-21')">
+            <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
+          </button>
+        </div>
+      </div>
 
-<footer>Tap the circle to check off a day. Progress is saved on this device and resets automatically each Monday.</footer>
+      <div class="day-card" data-date="2026-07-22">
+        <div class="day-info">
+          <span class="day-name">Wednesday, Jul 22</span>
+          <span class="day-workout">Full-Body Tone + Core (moderate) 💥</span>
+          <span class="day-notes">Lighter circuit hitting arms, legs, and core together. 2-3 rounds, focus on form over fatigue.</span>
+        </div>
+        <div class="checkbox-wrapper">
+          <button class="checkbox-btn" onclick="toggleDay('2026-07-22')">
+            <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="day-card rest" data-date="2026-07-23">
+        <div class="day-info">
+          <span class="day-name">Thursday, Jul 23</span>
+          <span class="day-workout">Active Recovery + Mobility 🧘</span>
+          <span class="day-notes">Easy walk or stretch only. Prioritize sleep and hydration ahead of travel.</span>
+        </div>
+        <div class="checkbox-wrapper">
+          <button class="checkbox-btn" onclick="toggleDay('2026-07-23')">
+            <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="day-card rest" data-date="2026-07-24">
+        <div class="day-info">
+          <span class="day-name">Friday, Jul 24</span>
+          <span class="day-workout">Travel Day — Rest ✈️</span>
+          <span class="day-notes">Departure day for the bachelorette trip. No workout — rest and hydrate.</span>
+        </div>
+        <div class="checkbox-wrapper">
+          <button class="checkbox-btn" onclick="toggleDay('2026-07-24')">
+            <svg viewBox="0 0 24 24"><path d="M4.1 12.7L9 17.6 20 6.6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="day-card trip" data-date="2026-07-25">
+        <div class="day-info">
+          <span class="day-name">Saturday, Jul 25</span>
+          <span class="day-workout">Bachelorette Trip 🎉</span>
+          <span class="day-notes">No workout planned — enjoy the trip!</span>
+        </div>
+      </div>
+
+      <div class="day-card trip" data-date="2026-07-26">
+        <div class="day-info">
+          <span class="day-name">Sunday, Jul 26</span>
+          <span class="day-workout">Bachelorette Trip 🎉</span>
+          <span class="day-notes">No workout planned — enjoy the trip!</span>
+        </div>
+      </div>
+
+    </div>
+    <button class="reset-btn" onclick="resetWeek('2026-07-20','2026-07-24')">Reset this week</button>
+  </section>
+
+  <!-- ROADMAP: post-trip to wedding -->
+  <section class="roadmap-section">
+    <h2 class="week-title">Road to October 24 🎉💍</h2>
+    <p class="roadmap-intro">Broad training phases from the trip through the wedding, aimed at VO2 max and muscle definition. Tell me your travel days and I'll fill in the week-by-week detail as we go.</p>
+    <div class="phase-list">
+
+      <div class="phase-card">
+        <span class="phase-dates">Jul 27 – Aug 23 (4 weeks)</span>
+        <span class="phase-title">Base Rebuild</span>
+        <span class="phase-notes">Back from the trip — rebuild training volume. 2x VO2 max interval sessions + 1 steady-state cardio day per week, 3x strength (upper/lower/full body) at moderate-high reps (10-15) for definition.</span>
+      </div>
+
+      <div class="phase-card">
+        <span class="phase-dates">Aug 24 – Sep 20 (4 weeks)</span>
+        <span class="phase-title">Strength &amp; Power Build</span>
+        <span class="phase-notes">Progressive overload kicks in — heavier loads, lower reps (8-12) on strength days, longer/harder interval sets for VO2 max. Add a hypertrophy-focused day for muscle definition.</span>
+      </div>
+
+      <div class="phase-card">
+        <span class="phase-dates">Sep 21 – Oct 11 (3 weeks)</span>
+        <span class="phase-title">Peak Definition</span>
+        <span class="phase-notes">Highest-intensity block: strength plus metabolic finishers for visible definition, VO2 max intervals at peak effort. Recovery (sleep, protein, hydration) matters as much as the sessions here.</span>
+      </div>
+
+      <div class="phase-card">
+        <span class="phase-dates">Oct 12 – Oct 23 (taper)</span>
+        <span class="phase-title">Taper to the Wedding</span>
+        <span class="phase-notes">Cut volume ~30-40%, keep intensity but shorten sessions. Last hard workout by ~Oct 19, easy/maintenance only in the final days so you arrive fresh, not sore.</span>
+      </div>
+
+      <div class="phase-card wedding-card">
+        <span class="phase-dates">Saturday, Oct 24</span>
+        <span class="phase-title">Wedding Day 🎉💍</span>
+        <span class="phase-notes">Enjoy it — you'll have put in the work.</span>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>Tap the circle to check off a day. Progress is saved on this device.</footer>
 
 <script>
-  // Determine the current week's Monday (ISO week) to key storage per-week
-  function getMondayKey(d) {
-    const date = new Date(d);
-    const day = date.getDay(); // 0 = Sunday
-    const diff = (day === 0 ? -6 : 1 - day);
-    date.setDate(date.getDate() + diff);
-    date.setHours(0,0,0,0);
-    return date.toISOString().slice(0,10);
-  }
-
-  const STORAGE_PREFIX = 'workout-week-';
-  const weekKey = getMondayKey(new Date());
-  const storageKey = STORAGE_PREFIX + weekKey;
+  const STORAGE_KEY = 'workout-progress-v2';
 
   function loadState() {
     try {
-      return JSON.parse(localStorage.getItem(storageKey)) || {};
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
     } catch (e) {
       return {};
     }
   }
 
   function saveState(state) {
-    localStorage.setItem(storageKey, JSON.stringify(state));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   }
 
-  function renderState() {
+  function toggleDay(date) {
     const state = loadState();
-    const cards = document.querySelectorAll('.day-card');
-    let completedCount = 0;
-    cards.forEach(card => {
-      const day = card.dataset.day;
-      if (state[day]) {
-        card.classList.add('completed');
-        completedCount++;
-      } else {
-        card.classList.remove('completed');
-      }
-    });
-    const total = cards.length;
-    const pct = Math.round((completedCount / total) * 100);
-    document.getElementById('progress-fill').style.width = pct + '%';
-    document.getElementById('progress-label').textContent = completedCount + ' of ' + total + ' days complete';
-  }
-
-  function toggleDay(day) {
-    const state = loadState();
-    state[day] = !state[day];
+    state[date] = !state[date];
     saveState(state);
     renderState();
   }
 
-  function resetWeek() {
-    if (confirm('Reset all checkmarks for this week?')) {
-      localStorage.removeItem(storageKey);
-      renderState();
+  function resetWeek(startDate, endDate) {
+    if (!confirm('Reset all checkmarks for this week?')) return;
+    const state = loadState();
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    Object.keys(state).forEach(d => {
+      const dd = new Date(d);
+      if (dd >= start && dd <= end) delete state[d];
+    });
+    saveState(state);
+    renderState();
+  }
+
+  function renderState() {
+    const state = loadState();
+
+    document.querySelectorAll('.day-card[data-date]').forEach(card => {
+      if (card.classList.contains('trip')) return;
+      const date = card.dataset.date;
+      if (state[date]) {
+        card.classList.add('completed');
+      } else {
+        card.classList.remove('completed');
+      }
+    });
+
+    document.querySelectorAll('.week-section').forEach(section => {
+      const cards = section.querySelectorAll('.day-card[data-date]:not(.trip)');
+      const total = cards.length;
+      if (total === 0) return;
+      let completed = 0;
+      cards.forEach(c => { if (state[c.dataset.date]) completed++; });
+      const pct = Math.round((completed / total) * 100);
+      const fill = section.querySelector('.progress-fill');
+      const label = section.querySelector('.progress-label');
+      if (fill) fill.style.width = pct + '%';
+      if (label) label.textContent = completed + ' of ' + total + ' days complete';
+    });
+  }
+
+  function markToday() {
+    const todayStr = new Date().toISOString().slice(0, 10);
+    const card = document.querySelector('.day-card[data-date="' + todayStr + '"]');
+    if (card) {
+      const nameEl = card.querySelector('.day-name');
+      if (nameEl && !nameEl.querySelector('.today-badge')) {
+        const badge = document.createElement('span');
+        badge.className = 'today-badge';
+        badge.textContent = 'Today';
+        nameEl.appendChild(badge);
+      }
     }
   }
 
-  function setWeekRange() {
-    const monday = new Date(weekKey);
-    const sunday = new Date(monday);
-    sunday.setDate(monday.getDate() + 6);
-    const opts = { month: 'short', day: 'numeric' };
-    const label = monday.toLocaleDateString('en-US', opts) + ' – ' + sunday.toLocaleDateString('en-US', opts);
-    document.getElementById('week-range').textContent = label;
+  function weddingCountdown() {
+    const wedding = new Date('2026-10-24T00:00:00');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const diffDays = Math.round((wedding - today) / (1000 * 60 * 60 * 24));
+    const el = document.getElementById('wedding-countdown');
+    if (!el) return;
+    if (diffDays > 0) {
+      el.textContent = diffDays + ' days until the wedding 🎉';
+    } else if (diffDays === 0) {
+      el.textContent = 'Today is the big day! 🎉💍';
+    } else {
+      el.textContent = 'Married life ✨';
+    }
   }
 
-  setWeekRange();
+  markToday();
+  weddingCountdown();
   renderState();
 </script>
 
